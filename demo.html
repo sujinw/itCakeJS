@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/it.js"></script>
+</head>
+<body>
+	<div class="a"><i></i></div>
+	<div class="a"><div></div></div>
+	<div class="a"><i></i></div>
+	<div class="a"><i></i></div>
+	<div class="a"><i></i></div>
+	<div class="a"><i></i></div>
+	<div class="a"><i></i></div>
+	<div class="a"><i></i></div>
+	<div id="a"><i class="aa"></i><i class="aa"></i><i class="aa"></i><i class="aa"></i><i class="aa"></i><i class="aa"></i><i class="aa"></i><i class="aa"></i><i class="aa"></i><i class="aa"></i><i class="aa"></i></div>
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="text" name="text">
+	<input type="checkbox" name="">
+	<input type="checkbox" name="">
+	<input type="checkbox" checked="checked" id='1' name="">
+	<input type="checkbox" name="">
+	<input type="checkbox" name="">
+	<input type="checkbox" name="">
+	<input type="checkbox" name="">
+	<input type="checkbox" name="">
+	<input type="checkbox" name="">
+<script type="text/javascript">
+var alert = function(){
+	return new alert.fn.init();
+}
+alert.fn = alert.prototype = {
+	init:function(){
+		return this;
+	}
+};
+alert.fn.init.prototype = {
+	show:function(opt){
+		if(typeof opt.callback === "function"){
+			opt.callback();
+		}
+		return this;
+	}
+}
+var a = new alert();
+a.show({
+	title:"title",
+	contnet:"title",
+	callback:function(){
+
+	} 
+});
+// var str = $('#a .aa').css({'height':'200px','background':'blue'});
+// var sr = $('.a div').css({'height':'100px','background':'red','width':"50%","line-height":"100px",'margin':"0 auto"});
+// var input = $("input[name=text]")
+var checkbox = $("input[type=checkbox]:checked")
+console.log(checkbox);
+</script>
+</body>
+</html>

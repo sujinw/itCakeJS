@@ -13,9 +13,9 @@
 	//处理原型对象
 	It.fn = It.prototype = {
 		init:function(selector,context){
-			var elements = this.selector(selector,context);
+			var elements = this.selectorFunction(selector,context);
 			Array.prototype.push.apply(this,elements);
-			return this;	
+			return this;
 		},
 		It:"1.0.0",
 		length:0,
@@ -44,25 +44,23 @@
 			window.It = _It;
 			window._$ = $;
 			return It;
-		}
+		},
+		
 	});
 
 	//添加实例方法
 	It.fn.extend({
-		selector:function(selector,context){
-			// 已实现：
-			// $('#div1') ID选择器 （直接返回对象）
-			// $('.aCur') 类选择器
-			// $('div') 元素选择器
-			// $('#div1 li') 组合选择器
-			// $('input[type=text]:checked') 属性值选择器
-			// $('a', myDiv) 选择myDiv下的所有a元素
-			// /*********************************************/
+		selectorFunction:function(selector,context){
+		// 已实现：
+		// $('#div1') ID选择器 （直接返回对象）
+		// $('.aCur') 类选择器
+		// $('div') 元素选择器
+		// $('#div1 li') 组合选择器
+		// $('input[type=text]:checked') 属性值选择器
+		// $('a', myDiv) 选择myDiv下的所有a元素
 
-			// //q查询表达式 o父对象
-			// function $(q, o){
-    //debugger;
-    //查询表达式必须为字符串，并且不能为空。
+		
+   		//查询表达式必须为字符串，并且不能为空。
 	    if(typeof(selector)!=='string' || selector == '') return [];
 	    
 	    //使用空格分割，只处理第一个表达式
@@ -90,7 +88,9 @@
 	        case '#':
 	            //ID选择器
 	            sObj = document.getElementById(s.substr(1));
-	            if(sObj)obj.push(sObj);
+	            if(sObj){
+	            	obj.push(sObj);
+	            }
 	            break;
 	        case '.':
 	            //类选择器
@@ -106,6 +106,8 @@
 	            obj = context.getElementsByTagName(s);
 	            break;
 	    }
+	    // console.log(obj)    
+
 	    if(val)
 	    {
 	        //[t=val]筛选属性匹配
@@ -118,6 +120,7 @@
 	        }
 	        obj = l;
 	    }
+	    // console.log(obj)    
 	    if(attr)
 	    {	
 	        //: 筛选属性匹配
@@ -129,6 +132,7 @@
 	        }
 	        obj = l;
 	    }    
+	    // console.log(obj)    
 	    
 	    if(arg.length > 1)
 	    {
@@ -143,25 +147,27 @@
 	        }
 	        obj = l;
 	    }
-	    
-	    if(sObj && arg.length == 1){
-	        //当为ID选择器时，直接返回对象。
-	        obj=sObj;
-	        if(obj)obj.length = 1;
-	    } else {
-	        //去除数组中重复元素
-	        var l = [];
-	        for(var i=0; i<obj.length; i++)obj[i].$isAdd = false;
-	        for(var i=0; i<obj.length; i++){
-	            if(!obj[i].$isAdd){
-	                obj[i].$isAdd = true;
-	                l.push(obj[i]);
-	            }
-	        }
-	        obj = l;
-	    }
-	    
+	    // console.log(obj)    
+
+        //去除数组中重复元素
+        var l = [];
+        for(var i=0; i<obj.length; i++)obj[i].$isAdd = false;
+        	for(var i=0; i<obj.length; i++){
+            	if(!obj[i].$isAdd){
+                	obj[i].$isAdd = true;
+                	l.push(obj[i]);
+            	}
+        	}
+        obj = l;
+	    // console.log(obj)    
 	    return obj;
+		},
+		getStyle:function(obj, name){
+			if(obj.currentStyle){
+				return obj.currentStyle[name];
+			}else{
+				return getComputedStyle(obj, false)[name];
+			}
 		},
 		get:function(num){
 			return this[num];
@@ -198,6 +204,51 @@
 				}
 			}
 			return this;
-		}
+		},
+		show : function(time){//显示
+			time = time || 0;
+			if(time < 0) return;
+			var self = this;
+			self.each(function(index,ele) {
+				if(ele.style['display'] == 'none' || self.getStyle(ele,'display') == 'none'){
+					ele.style['display'] = "block";
+				}
+
+			});
+			return this;
+		},
+		hide : function(time){//隐藏
+			time = time || 0;
+			if(time < 0) return;
+			if(time < 0) return;
+			this.each(function(index,ele) {
+				if(ele.style['display'] != 'none' || this.getStyle(ele,'display') != 'none'){
+					ele.style['display'] = "none";
+				}
+
+			});
+			return this;
+		},
+		addClass:function(ClassName){//添加class
+			this.each(function(index,ele) {
+				ele.className += ClassName;
+
+			});
+			return this;
+		},
+		removeClass : function(ClassName){
+			var newClass;
+				var oldClass;
+			this.each(function(index,ele) {//删除class
+				oldClass = ele.className.split(' ');
+				for(var i=0; i<oldClass.length; i++){
+					if(oldClass[i] == ClassName){
+						oldClass.splice(i,1);
+					}
+				}
+				ele.className = oldClass.join(" ");
+			});
+			return this;
+		},
 	});
 })();
